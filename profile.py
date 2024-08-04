@@ -53,17 +53,17 @@ for i in range(num_nodes):
   iface.addAddress(pg.IPv4Address(prefixForIP + str(i + 1), "255.255.255.0"))
   link.addInterface(iface)
   
-  # install Docker
-  node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/install_docker.sh"))
-  # install Kubernetes
-  node.addService(pg.Execute(shell="sh", command="sudo swapoff -a"))
+  # # install Docker
+  # node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/install_docker.sh"))
+  # # install Kubernetes
+  # node.addService(pg.Execute(shell="sh", command="sudo swapoff -a"))
   
-  if i == 0:
-    # install Kubernetes manager
-    node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/kube_manager.sh " + params.userid + " " + str(num_nodes)))
-    # install Helm
-    node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/install_helm.sh"))
-  else:
-    node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/kube_worker.sh"))
+  # if i == 0:
+  #   # install Kubernetes manager
+  #   node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/kube_manager.sh " + params.userid + " " + str(num_nodes)))
+  #   # install Helm
+  #   node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/install_helm.sh"))
+  # else:
+  #   node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/kube_worker.sh"))
     
 pc.printRequestRSpec(request)
