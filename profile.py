@@ -54,18 +54,20 @@ for i in range(num_nodes):
   link.addInterface(iface)
 
   # initialize the installation process for each node
-  node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/init_install.sh"  + params.userid + " " + str(num_nodes)))
+  #node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/init_install.sh"  + params.userid + " " + str(num_nodes)))
 
   # install Docker
   # install Kubernetes
   #node.addService(pg.Execute(shell="sh", command="sudo swapoff -a"))
   
-  #if i == 0:
+  if i == 0:
+     node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/init_head.sh"  + params.userid + " " + str(num_nodes)))
     # install Kubernetes manager
   #  node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/kube_manager.sh " + params.userid + " " + str(num_nodes)))
     # install Helm
   #  node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/install_helm.sh"))
-  #else:
+  else:
+     node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/init_worker.sh"  + params.userid + " " + str(num_nodes)))
   #  node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/kube_worker.sh"))
     
 pc.printRequestRSpec(request)
