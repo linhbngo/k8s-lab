@@ -1,7 +1,8 @@
 import geni.portal as portal
 import geni.rspec.pg as pg
 import geni.rspec.igext as IG
-   
+import profile_master, profile_worker
+
 pc = portal.Context()
 
 pc.defineParameter( "n", 
@@ -15,7 +16,11 @@ pc.defineParameter( "corecount",
                    portal.ParameterType.INTEGER, 2 )
 pc.defineParameter( "ramsize", "MB of RAM in each node.  NB: Make certain your requested cluster can supply this quantity.", 
                    portal.ParameterType.INTEGER, 2048 )
+
 params = pc.bindParameters()
+
+def return_param():
+    return params
 
 request = pc.makeRequestRSpec()
 
@@ -35,6 +40,10 @@ prefixForIP = "192.168.1."
 link = request.LAN("lan")
 
 num_nodes = params.n
+
+def return_numnodes():
+    return num_nodes
+
 for i in range(num_nodes):
   if i == 0:
     node = request.XenVM("head")
@@ -53,17 +62,19 @@ for i in range(num_nodes):
   iface.addAddress(pg.IPv4Address(prefixForIP + str(i + 1), "255.255.255.0"))
   link.addInterface(iface)
   
-  # # install Docker
-  # node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/install_docker.sh"))
-  # # install Kubernetes
-  # node.addService(pg.Execute(shell="sh", command="sudo swapoff -a"))
+  # install Docker
+  profile_master.install_docker()
+  profile_worker.install_docker()
+  # install Kubernetes
+  profile_master.install_k8s()
+  profile_worker.install_k8s()
   
-  # if i == 0:
-  #   # install Kubernetes manager
-  #   node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/kube_manager.sh " + params.userid + " " + str(num_nodes)))
-  #   # install Helm
-  #   node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/install_helm.sh"))
-  # else:
-  #   node.addService(pg.Execute(shell="sh", command="sudo bash /local/repository/kube_worker.sh"))
+  if i == 0:
+    # install Kubernetes manager
+    profile_master.install_k8s_manager()
+    # install Helm
+    profile_master.install_helm()
+  else:
+    profile_worker.install_k8s_worker()
     
 pc.printRequestRSpec(request)
