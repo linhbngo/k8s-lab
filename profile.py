@@ -18,16 +18,14 @@ pc.defineParameter( "ramsize", "MB of RAM in each node.  NB: Make certain your r
                    portal.ParameterType.INTEGER, 2048 )
 pc.defineParameter("storage", "GB of storage for each node",
                    portal.ParameterType.INTEGER, 500)
-pc.defineParameter("disk_image", "Disk Image for each node",
-                   portal.ParameterType.STRING, 
-                   "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD",
-                   [
-                      "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD",
-                      "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD",
-                      "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU18-64-A-OSCP-T",
-                      "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU22-64-ARM"
-                   ]
-                   )
+pc.defineParameter("disk_image",
+                   "Disk image to use for each node",
+                   portal.ParameterType.STRING,
+                   "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD",
+                   ["urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD",
+                    "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD",
+                    "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU18-64-A-OSCP-T",
+                    "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU22-64-ARM"])
 
 params = pc.bindParameters()
 
