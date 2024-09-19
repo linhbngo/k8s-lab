@@ -20,7 +20,7 @@ pc.defineParameter("storage", "GB of storage for each node",
                    portal.ParameterType.INTEGER, 500)
 pc.defineParameter("disk_image", "Disk Image for each node",
                    portal.ParameterType.STRING, 
-                   "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD"
+                   "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD",
                    [
                       "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD",
                       "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD",
