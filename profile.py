@@ -5,6 +5,13 @@ import profile_master, profile_worker
 
 pc = portal.Context()
 
+disk_image_options = [
+    "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD",
+    "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD",
+    "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU18-64-A-OSCP-T",
+    "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU22-64-ARM"
+]
+
 pc.defineParameter( "n", 
                    "Number of nodes (2 or more)", 
                    portal.ParameterType.INTEGER, 2 )
@@ -20,12 +27,9 @@ pc.defineParameter("storage", "GB of storage for each node",
                    portal.ParameterType.INTEGER, 500)
 pc.defineParameter("disk_image",
                    "Disk image to use for each node",
-                   portal.ParameterType.STRING,
-                   "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD",
-                   ["urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD",
-                    "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD",
-                    "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU18-64-A-OSCP-T",
-                    "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU22-64-ARM"])
+                   portal.ParameterType.STRING_LIST,
+                   default_value=disk_image_options[0],  # Set a default value
+                   candidate_values=disk_image_options)
 
 params = pc.bindParameters()
 
