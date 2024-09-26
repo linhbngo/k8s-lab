@@ -5,12 +5,6 @@ import profile_master, profile_worker
 
 pc = portal.Context()
 
-disk_image_options = [
-    "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD",
-    "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD",
-    "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU18-64-A-OSCP-T",
-    "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU22-64-ARM"
-]
 
 pc.defineParameter( "n", 
                    "Number of nodes (2 or more)", 
@@ -26,10 +20,15 @@ pc.defineParameter( "ramsize", "MB of RAM in each node.  NB: Make certain your r
 pc.defineParameter("storage", "GB of storage for each node",
                    portal.ParameterType.INTEGER, 500)
 pc.defineParameter("disk_image",
-                   "Disk image to use for each node",
-                   portal.ParameterType.STRING_LIST,
-                   default_value=disk_image_options[0],  # Set a default value
-                   candidate_values=disk_image_options)
+                      "Disk image to use for each node",
+                      portal.ParameterType.STRING_LIST,
+                      default_value="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD",
+                      candidate_values=[
+                          "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD",
+                          "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD",
+                          "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU18-64-A-OSCP-T",
+                          "urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU22-64-ARM"
+                      ])
 
 params = pc.bindParameters()
 
